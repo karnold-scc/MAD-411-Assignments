@@ -1,47 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="50dp"
-    tools:context="com.example.mad411.MainActivity">
+    android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter Your Name:"
-        android:textSize="24sp"
-        android:labelFor="@id/enter_name_edit_text" />
 
     <EditText
-        android:id="@+id/enter_name_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
+        android:id="@+id/expenseNameEditText"
+        android:layout_width="212dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginBottom="626dp"
+        android:ems="10"
+        android:hint="Expense Name"
         android:inputType="text"
-        android:ems="5"
-        android:importantForAutofill="no" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/show_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text=""
-        android:textSize="24sp"
-        />
+    <EditText
+        android:id="@+id/amountEditText"
+        android:layout_width="244dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="114dp"
+        android:layout_marginBottom="545dp"
+        android:ems="10"
+        android:hint="Expense Amount"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expenseNameEditText"
+        app:layout_constraintVertical_bias="0.4" />
 
+    <EditText
+        android:id="@+id/dateEditText"
+        android:layout_width="234dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="465dp"
+        android:ems="10"
+        android:hint="Date (Optional)"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountEditText" />
 
     <Button
-        android:id="@+id/show_name_button"
-        android:text="Show Name"
-        android:layout_width="match_parent"
+        android:id="@+id/addExpenseButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="showName" />
-</LinearLayout>
+        android:layout_marginStart="135dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="169dp"
+        android:layout_marginBottom="353dp"
+        android:text="Add Expense"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateEditText"
+        app:layout_constraintVertical_bias="1.0"
+        android:onClick="addExpense"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expenseRecyclerView"
+        android:layout_width="409dp"
+        android:layout_height="367dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addExpenseButton">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
