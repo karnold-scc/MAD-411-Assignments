@@ -1,5 +1,7 @@
 package com.example.mad411
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.ceil
@@ -29,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var expenseDateEditText: EditText
     private lateinit var addButton: Button
     private lateinit var adapter: CustomAdapter
+    private lateinit var tipButton: Button
 
     val expenses = mutableListOf<Expense>()
 
@@ -40,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 //    val expenseAmountText = findViewById<TextView>(R.id.expenseAmountText)
 //    val deleteButton = findViewById<Button>(R.id.deleteButton)
 
+    //Linter is mean to me
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -50,16 +56,18 @@ class MainActivity : AppCompatActivity() {
         expenseDateEditText = findViewById<EditText>(R.id.dateEditText)
         addButton = findViewById<Button>(R.id.addExpenseButton)
         expenseRecyclerView = findViewById(R.id.expenseRecyclerView)
+        tipButton = findViewById(R.id.financialTipsButton)
 
         expenseRecyclerView.layoutManager = LinearLayoutManager(this)
 
         //set adapter
-        adapter = CustomAdapter(expenses){
-            position -> deleteItem(position)
-        }
+        adapter = CustomAdapter(expenses,
+            { position -> deleteItem(position) },
+            {position -> showExpenseDetails(position)})
         expenseRecyclerView.adapter = adapter
 
         addButton.setOnClickListener{addExpense()}
+        tipButton.setOnClickListener{startFinancialTips()}
     }
 
     fun addExpense(){
@@ -77,9 +85,24 @@ class MainActivity : AppCompatActivity() {
         expenseDateEditText.setText(" ")
     }
 
+    //button events
     private fun deleteItem (pos: Int){
         expenses.removeAt(pos)
         adapter.notifyItemRemoved(pos)
+    }
+
+    private fun showExpenseDetails(position: Int){
+        val expense = expenses[position]
+        val intent = Intent(this, ExpenseDetails::class.java)
+        intent.putExtra("expense_name",expense.name)
+        intent.putExtra("expense_amount", expense.amount)
+        startActivity(intent)
+    }
+
+    private fun startFinancialTips(){
+        //Investopedia is a funny word
+        val intent = Intent(Intent.ACTION_VIEW, "https://www.investopedia.com/articles/younginvestors/08/eight-tips.asp".toUri())
+        startActivity(intent)
     }
 
     //Lifecycle log stuff

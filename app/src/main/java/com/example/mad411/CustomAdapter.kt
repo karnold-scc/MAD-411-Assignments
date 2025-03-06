@@ -7,7 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(private val dataSet: List<Expense>, private val onDeleteClick: (Int) -> Unit) :
+class CustomAdapter(private val dataSet: List<Expense>, private val onDeleteClick: (Int) -> Unit,
+    private val showDetailsClick: (Int) -> Unit) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
     /**
      * Provide a reference to the type of views that you are using
@@ -17,12 +18,14 @@ class CustomAdapter(private val dataSet: List<Expense>, private val onDeleteClic
         val expenseText: TextView
         val expenseAmountText: TextView
         val deleteButton : Button
+        val detailButton: Button
 
         init {
             // Define click listener for the ViewHolder's View
             expenseText = view.findViewById(R.id.expenseNameText)
             expenseAmountText = view.findViewById(R.id.expenseAmountText)
             deleteButton = view.findViewById(R.id.deleteButton)
+            detailButton = view.findViewById(R.id.detailButton)
         }
     }
 
@@ -43,6 +46,7 @@ class CustomAdapter(private val dataSet: List<Expense>, private val onDeleteClic
         viewHolder.expenseText.text = dataSet[position].name
         viewHolder.expenseAmountText.text = dataSet[position].amount.toString()
         viewHolder.deleteButton.setOnClickListener{ onDeleteClick(position)}
+        viewHolder.detailButton.setOnClickListener{showDetailsClick(position)}
     }
 
     // Return the size of your dataset (invoked by the layout manager)
