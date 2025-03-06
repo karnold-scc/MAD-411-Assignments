@@ -1,6 +1,7 @@
 package com.example.mad411
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.d("Lifecycle", "onCreate was called successfully.")
 
         expenseNameEditText = findViewById<EditText>(R.id.expenseNameEditText)
         expenseAmountEditText = findViewById<EditText>(R.id.amountEditText)
@@ -78,6 +80,32 @@ class MainActivity : AppCompatActivity() {
     private fun deleteItem (pos: Int){
         expenses.removeAt(pos)
         adapter.notifyItemRemoved(pos)
+    }
+
+    //Lifecycle log stuff
+    override fun onStart() {
+        super.onStart()
+        Log.d("Lifecycle", "onStart called successfully.")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Lifecycle", "onResume called successfully.")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Lifecycle", "onPause called successfully.")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Lifecycle", "onStop called successfully.")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Lifecycle", "onDestroy called successfully.")
     }
 
 }
