@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var addButton: Button
     private lateinit var adapter: CustomAdapter
     private lateinit var tipButton: Button
+    private lateinit var footer : FooterFragment
+    private lateinit var header : HeaderFragment
 
     val expenses = mutableListOf<Expense>()
 
@@ -66,6 +68,18 @@ class MainActivity : AppCompatActivity() {
             {position -> showExpenseDetails(position)})
         expenseRecyclerView.adapter = adapter
 
+        //load fragments
+        header = HeaderFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameHeader, header)
+            .commit()
+        footer = FooterFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameFooter, footer)
+            .commit()
+        updateFooter()
+
+
         addButton.setOnClickListener{addExpense()}
         tipButton.setOnClickListener{startFinancialTips()}
     }
@@ -79,10 +93,17 @@ class MainActivity : AppCompatActivity() {
         if (expName.isNotEmpty() && amount.isNotEmpty()) {
             expenses.add(Expense(expName, amount))
             adapter.notifyItemInserted(expenses.size -1 )
+            updateFooter()
         }
         expenseNameEditText.setText(" ")
         expenseAmountEditText.setText(" ")
         expenseDateEditText.setText(" ")
+    }
+
+    //call footer update function
+    private fun updateFooter(){
+        val total = expenses.sumByDouble { it.amount.toDouble() }
+        footer.updateTotal(total)
     }
 
     //button events

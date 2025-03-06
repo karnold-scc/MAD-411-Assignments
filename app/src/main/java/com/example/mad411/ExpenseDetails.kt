@@ -1,6 +1,9 @@
 package com.example.mad411
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +14,9 @@ class ExpenseDetails : AppCompatActivity() {
     //View Components or whatever they're called
     private lateinit var expenseName: TextView
     private lateinit var expenseAmount: TextView
+    private lateinit var backButton: Button
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -23,9 +28,19 @@ class ExpenseDetails : AppCompatActivity() {
 
         //Initialize views
         expenseName = findViewById(R.id.expenseNameDetails)
-        expenseAmount = findViewById(R.id.expenseAmountDetails) //I need to start giving better IDs -note to self
+        expenseAmount = findViewById(R.id.expenseAmountDetails)
+        backButton = findViewById(R.id.backButton)
+        backButton.setOnClickListener{goBack()}
+        //I need to start giving better IDs -note to self
+
         //now set the views to the data from the main activity
         expenseName.text = "Expense Name: $name"
         expenseAmount.text = "Expense Amount: $$amount"
     }
+
+    fun goBack(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
 }
