@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.ceil
 import kotlin.math.exp
 
-data class Expense(val name: String, val amount: String){
+data class Expense(val id: Int, val name: String, val amount: String){
 
 }
 
@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //EVERYTHING FROM HERE DOWN WILL GET MOVEd
         Log.d("Lifecycle", "onCreate was called successfully.")
 
         expenseNameEditText = findViewById<EditText>(R.id.expenseNameEditText)
