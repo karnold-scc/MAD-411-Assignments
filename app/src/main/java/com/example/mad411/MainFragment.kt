@@ -1,60 +1,134 @@
 package com.example.mad411
 
-import android.app.Fragment
+//import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
+
+//GSON
+import com.google.gson.Gson
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val FILE_NAME = "expenses.txt"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MainFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MainFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var customAdapter: CustomAdapter
+    private val expenseList = mutableListOf<Expense>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        val view = inflater.inflate(R.layout.fragment_main, container, false)
+
+        recyclerView = view.findViewById(R.id.expenseRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        //Prevent duplicate expenses
+        expenseList.clear()
+        expenseList.addAll(loadTasksFromFile(requireContext()))
+
+        customAdapter = CustomAdapter(expenseList, this)
+        recyclerView.adapter = expenseAdapter
+
+        val addExpenseButton : FloatingActionButton = view.findViewById(R.id.addExpenseFab)
+        addExpenseButton.setOnClickListener{
+            findNavController().navigate(R.id.action_mainFragment_to_addExpenseFragment)
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MainFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onEditClick(expense: Expense){
+        val bundle = Bundle().apply{
+            putInt("expenseId", expense.id)
+            putString("expenseName", expense.name)
+            putString("expenseAmount", expense.amount)
+        }
+        findNavController().navigate(R.id.action_mainFragment_to_addExpenseFragment, bundle)
+    }
+
+    override fun onDeleteClick(expense: Expense){
+        expenseList.remove(expense)
+        customAdapter.notifyDataSetChanged()
+        saveTasksToFile(requireContext(), expenseList)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>("newExpense")
+            ?.observe(viewLifecycleOwner){ bundle ->
+                val updatedExpense = Expense(
+                    bundle.getInt("expenseId"),
+                    bundle.getString("expenseName", ""),
+                    bundle.getString("expenseAmount", "")
+                )
+
+                val index = expenseList.indexOfFirst { it.id == updatedExpense.id }
+                if (index != -1){
+                    expenseList[index] = updatedExpense
+                    customAdapter.notifyItemChanged(index)
                 }
+                else{
+                    expenseList.add(updatedExpense)
+                    customAdapter.notifyItemInserted(expenseList.size - 1)
+                }
+
+                saveTasksToFile(requireContext(), expenseList)
             }
     }
+
+    private fun saveTasksToFile(context: Context, expenseList: List<Expense>){
+        try{
+            val json = Gson().toJson(expenseList)
+
+            context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE).use{
+                output ->
+                output.write(json.toByteArray())
+            }
+            Log.d("FileStorage", "Expenses Saved Successfully")
+        }
+        catch (e: IOException){
+            Log.e("FileStorage", "Error Saving Expenses: ${e.message}")
+        }
+    }
+
+    private fun loadTasksFromFile(context: Context): MutableList<Expense> {
+        val expenseList: MutableList<Expense> = mutableListOf()
+        try {
+            val file = File(context.filesDir, FILE_NAME)
+            if (!file.exists()) return expenseList
+
+            val json = file.readText()
+            val type = object : TypeToken<List<Expense>>() {}.type
+            val loadedTasks: List<Expense> = Gson().fromJson(json, type)
+            expenseList.addAll(loadedTasks)
+
+            Log.d("FileStorage", "Expenes loaded successfully")
+        } catch (e: FileNotFoundException) {
+            Log.e("FileStorage", "File not found: ${e.message}")
+        } catch (e: IOException) {
+            Log.e("FileStorage", "Error reading file: ${e.message}")
+        }
+        return expenseList
+    }
+
 }

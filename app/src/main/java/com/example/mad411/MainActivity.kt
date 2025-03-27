@@ -54,46 +54,47 @@ class MainActivity : AppCompatActivity() {
 
         //EVERYTHING FROM HERE DOWN WILL GET MOVEd
         Log.d("Lifecycle", "onCreate was called successfully.")
-
-        expenseNameEditText = findViewById<EditText>(R.id.expenseNameEditText)
-        expenseAmountEditText = findViewById<EditText>(R.id.amountEditText)
-        expenseDateEditText = findViewById<EditText>(R.id.dateEditText)
-        addButton = findViewById<Button>(R.id.addExpenseButton)
-        expenseRecyclerView = findViewById(R.id.expenseRecyclerView)
-        tipButton = findViewById(R.id.financialTipsButton)
-
-        expenseRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        //set adapter
-        adapter = CustomAdapter(expenses,
-            { position -> deleteItem(position) },
-            {position -> showExpenseDetails(position)})
-        expenseRecyclerView.adapter = adapter
-
-        //load fragments
-        header = HeaderFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frameHeader, header)
-            .commit()
-        footer = FooterFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frameFooter, footer)
-            .commit()
-        updateFooter()
-
-
-        addButton.setOnClickListener{addExpense()}
-        tipButton.setOnClickListener{startFinancialTips()}
+//
+//        expenseNameEditText = findViewById<EditText>(R.id.expenseNameEditText)
+//        expenseAmountEditText = findViewById<EditText>(R.id.amountEditText)
+//        expenseDateEditText = findViewById<EditText>(R.id.dateEditText)
+//        addButton = findViewById<Button>(R.id.addExpenseButton)
+//        expenseRecyclerView = findViewById(R.id.expenseRecyclerView)
+//        tipButton = findViewById(R.id.financialTipsButton)
+//
+//        expenseRecyclerView.layoutManager = LinearLayoutManager(this)
+//
+//        //set adapter
+//        adapter = CustomAdapter(expenses,
+//            { position -> deleteItem(position) },
+//            {position -> showExpenseDetails(position)})
+//        expenseRecyclerView.adapter = adapter
+//
+//        //load fragments
+//        header = HeaderFragment()
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.frameHeader, header)
+//            .commit()
+//        footer = FooterFragment()
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.frameFooter, footer)
+//            .commit()
+//        updateFooter()
+//
+//
+//        addButton.setOnClickListener{addExpense()}
+//        tipButton.setOnClickListener{startFinancialTips()}
     }
 
     fun addExpense(){
+
         val expName = expenseNameEditText.text.toString()
         val amount = expenseAmountEditText.text.toString()
 
 
         //val expDate = expenseDateEditText.text.toString()
         if (expName.isNotEmpty() && amount.isNotEmpty()) {
-            expenses.add(Expense(expName, amount))
+            expenses.add(Expense((System.currentTimeMillis() / 1000).toInt(), expName, amount))
             adapter.notifyItemInserted(expenses.size -1 )
             updateFooter()
         }

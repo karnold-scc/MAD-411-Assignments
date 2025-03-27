@@ -7,46 +7,53 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(private val dataSet: List<Expense>, private val onDeleteClick: (Int) -> Unit,
-    private val showDetailsClick: (Int) -> Unit) :
+class CustomAdapter(private val dataSet: List<Expense>, private val listener: ExpenseItemListener) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val expenseText: TextView
-        val expenseAmountText: TextView
-        val deleteButton : Button
-        val detailButton: Button
 
-        init {
-            // Define click listener for the ViewHolder's View
-            expenseText = view.findViewById(R.id.expenseNameText)
-            expenseAmountText = view.findViewById(R.id.expenseAmountText)
-            deleteButton = view.findViewById(R.id.deleteButton)
-            detailButton = view.findViewById(R.id.detailButton)
+    interface ExpenseItemListener{
+        fun onEditClick(expense: Expense)
+        fun onDeleteClick(expense: Expense)
+    }
+
+    inner class ExpenseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val expenseText: TextView = view.findViewById(R.id.expenseNameText)
+        private val expenseAmountText: TextView = view.findViewById(R.id.expenseAmountText)
+        private val deleteButton : Button = view.findViewById(R.id.deleteButton)
+        private val detailButton: Button = view.findViewById(R.id.detailButton)
+        private val editButton: Button = view.findViewById(R.id.editButton)
+
+        fun bind(expense: Expense){
+            expenseText.text = expense.name
+            expenseAmountText.text = expense.amount
+
+            editButton.setOnClickListener{
+                listener.onEditClick(expense)
+            }
+
+            deleteButton.setOnClickListener {
+                listener.onDeleteClick(expense)
+            }
         }
     }
 
     // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): TaskViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.inner_layout, viewGroup, false)
+            .inflate(R.layout.expense_item, viewGroup, false)
 
-        return ViewHolder(view)
+        return ExpenseViewHolder(view)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ExpenseViewHolder, position: Int) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.expenseText.text = dataSet[position].name
-        viewHolder.expenseAmountText.text = dataSet[position].amount.toString()
-        viewHolder.deleteButton.setOnClickListener{ onDeleteClick(position)}
-        viewHolder.detailButton.setOnClickListener{showDetailsClick(position)}
+        val expense = dataSet[position]
+        viewHolder.bind(expense)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
