@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomAdapter(private val dataSet: List<Expense>, private val listener: ExpenseItemListener) :
-    RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+    RecyclerView.Adapter<CustomAdapter.ExpenseViewHolder>() {
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
@@ -24,27 +24,26 @@ class CustomAdapter(private val dataSet: List<Expense>, private val listener: Ex
         private val expenseAmountText: TextView = view.findViewById(R.id.expenseAmountText)
         private val deleteButton : Button = view.findViewById(R.id.deleteButton)
         private val detailButton: Button = view.findViewById(R.id.detailButton)
-        private val editButton: Button = view.findViewById(R.id.editButton)
 
         fun bind(expense: Expense){
             expenseText.text = expense.name
             expenseAmountText.text = expense.amount
 
-            editButton.setOnClickListener{
-                listener.onEditClick(expense)
-            }
-
             deleteButton.setOnClickListener {
                 listener.onDeleteClick(expense)
+            }
+
+            detailButton.setOnClickListener{
+                listener.onEditClick(expense)
             }
         }
     }
 
     // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): TaskViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ExpenseViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.expense_item, viewGroup, false)
+            .inflate(R.layout.inner_layout, viewGroup, false)
 
         return ExpenseViewHolder(view)
     }

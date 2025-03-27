@@ -1,6 +1,7 @@
 package com.example.mad411
 
 //import android.app.Fragment
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -46,7 +49,7 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
         expenseList.addAll(loadTasksFromFile(requireContext()))
 
         customAdapter = CustomAdapter(expenseList, this)
-        recyclerView.adapter = expenseAdapter
+        recyclerView.adapter = customAdapter
 
         val addExpenseButton : FloatingActionButton = view.findViewById(R.id.addExpenseFab)
         addExpenseButton.setOnClickListener{
@@ -62,7 +65,7 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
             putString("expenseName", expense.name)
             putString("expenseAmount", expense.amount)
         }
-        findNavController().navigate(R.id.action_mainFragment_to_addExpenseFragment, bundle)
+        findNavController().navigate(R.id.action_mainFragment_to_expenseDetailsFragment, bundle)
     }
 
     override fun onDeleteClick(expense: Expense){
@@ -71,16 +74,20 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
         saveTasksToFile(requireContext(), expenseList)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>("newExpense")
             ?.observe(viewLifecycleOwner){ bundle ->
                 val updatedExpense = Expense(
+
                     bundle.getInt("expenseId"),
                     bundle.getString("expenseName", ""),
                     bundle.getString("expenseAmount", "")
+
                 )
+                Log.d("InBundle", bundle.getString("expenseName").toString())
 
                 val index = expenseList.indexOfFirst { it.id == updatedExpense.id }
                 if (index != -1){
@@ -90,8 +97,9 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
                 else{
                     expenseList.add(updatedExpense)
                     customAdapter.notifyItemInserted(expenseList.size - 1)
-                }
 
+                }
+                Log.d("BeforeSave", expenseList[0].name)
                 saveTasksToFile(requireContext(), expenseList)
             }
     }

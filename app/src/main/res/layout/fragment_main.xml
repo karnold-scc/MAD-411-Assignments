@@ -3,32 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainFragment">
 
     <!-- Header -->
-    <FrameLayout
-        android:id="@+id/frameHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 
 
     <!-- RecyclerView for Expenses -->
+    <FrameLayout
+        android:id="@+id/frameHeader"
+        android:layout_width="match_parent"
+        android:layout_height="65dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/expenseRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="368dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp" />
 
     <!-- Financial Tips Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addExpenseFab"
+        android:layout_width="92dp"
+        android:layout_height="73dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
     <Button
         android:id="@+id/financialTipsButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click here for financial tips!"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:text="Click here for financial tips!" />
 
-
+    <FrameLayout
+        android:id="@+id/frameFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

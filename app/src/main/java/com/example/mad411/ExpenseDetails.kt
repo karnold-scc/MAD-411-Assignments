@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.findNavController
 
 class ExpenseDetails : AppCompatActivity() {
     //View Components or whatever they're called
@@ -16,7 +17,6 @@ class ExpenseDetails : AppCompatActivity() {
     private lateinit var expenseAmount: TextView
     private lateinit var backButton: Button
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,8 +39,7 @@ class ExpenseDetails : AppCompatActivity() {
     }
 
     fun goBack(){
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+
     }
 
 }

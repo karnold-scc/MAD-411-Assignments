@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 
 
 class ExpenseDetailsFragment : Fragment() {
@@ -22,8 +24,11 @@ class ExpenseDetailsFragment : Fragment() {
         val expenseName = arguments?.getString("expenseName") ?: "No Name"
         val expenseAmount = arguments?.getString("expenseAmount") ?: "0.00"
 
-        view.findViewById<TextView(R.id.expenseNameText).text = expenseName
-        view.findViewById<TextView(R.id.expenseAmountText).text = expenseAmount
+        view.findViewById<TextView>(R.id.expenseNameDetails).text = expenseName
+        view.findViewById<TextView>(R.id.expenseAmountDetails).text = expenseAmount
+
+        val backButton : Button = view.findViewById(R.id.backButton)
+        backButton.setOnClickListener { findNavController().navigate(R.id.action_expenseDetailsFragment_to_mainFragment) }
 
         return view
     }

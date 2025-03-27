@@ -6,6 +6,7 @@
     android:layout_gravity="center"
     android:layout_marginTop="16dp"
     android:elevation="4dp"
+    android:fitsSystemWindows="true"
     app:cardCornerRadius="8dp"
     app:cardBackgroundColor="@color/beige"
     tools:context=".FooterFragment">

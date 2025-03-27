@@ -27,7 +27,12 @@
         android:id="@+id/expenseDetailsFragment"
         android:name="com.example.mad411.ExpenseDetailsFragment"
         android:label="Task Details"
-        tools:layout="@layout/fragment_expense_details" />
+        tools:layout="@layout/fragment_expense_details">
+
+        <action
+        android:id="@+id/action_expenseDetailsFragment_to_mainFragment"
+        app:destination="@id/mainFragment" />
+    </fragment>
 
     <!-- Add Task Fragment -->
     <fragment

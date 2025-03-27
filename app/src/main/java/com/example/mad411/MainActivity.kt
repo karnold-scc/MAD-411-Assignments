@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 //    val deleteButton = findViewById<Button>(R.id.deleteButton)
 
     //Linter is mean to me
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
