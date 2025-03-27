@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mainFragment">
+
+    <!-- Main Fragment (Task List) -->
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.mad411.MainFragment"
+        android:label="Task List"
+        tools:layout="@layout/fragment_main">
+
+        <!-- Action: Navigate to TaskDetailsFragment -->
+        <action
+            android:id="@+id/action_mainFragment_to_expenseDetailsFragment"
+            app:destination="@id/expenseDetailsFragment" />
+
+        <!-- Action: Navigate to AddTaskFragment -->
+        <action
+            android:id="@+id/action_mainFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
+
+    <!-- Task Details Fragment -->
+    <fragment
+        android:id="@+id/expenseDetailsFragment"
+        android:name="com.example.mad411.ExpenseDetailsFragment"
+        android:label="Task Details"
+        tools:layout="@layout/fragment_expense_details" />
+
+    <!-- Add Task Fragment -->
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.mad411.AddExpenseFragment"
+        android:label="Add Task"
+        tools:layout="@layout/fragment_add_expense" />
+
+</navigation>

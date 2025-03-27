@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddExpenseFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <!-- Expense Name Input -->
+    <EditText
+        android:id="@+id/expenseNameEditText"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:hint="Expense Name"
+        android:inputType="text"
+        android:layout_marginTop="16dp" />
 
-</FrameLayout>
+    <!-- Amount Input -->
+    <EditText
+        android:id="@+id/amountEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Expense Amount"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="16dp" />
+
+    <!-- Date Input -->
+    <EditText
+        android:id="@+id/dateEditText"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:hint="Date (Optional)"
+        android:inputType="text"
+        android:layout_marginTop="16dp" />
+
+    <!-- Add Expense Button -->
+    <Button
+        android:id="@+id/addExpenseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Expense"
+        android:onClick="addExpense"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

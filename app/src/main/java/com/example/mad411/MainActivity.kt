@@ -69,17 +69,17 @@ class MainActivity : AppCompatActivity() {
 //            { position -> deleteItem(position) },
 //            {position -> showExpenseDetails(position)})
 //        expenseRecyclerView.adapter = adapter
-//
+
 //        //load fragments
-//        header = HeaderFragment()
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.frameHeader, header)
-//            .commit()
-//        footer = FooterFragment()
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.frameFooter, footer)
-//            .commit()
-//        updateFooter()
+        header = HeaderFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameHeader, header)
+            .commit()
+        footer = FooterFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameFooter, footer)
+            .commit()
+        updateFooter()
 //
 //
 //        addButton.setOnClickListener{addExpense()}
