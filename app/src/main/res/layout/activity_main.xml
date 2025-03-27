@@ -8,12 +8,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:padding="16dp">
 
     <!-- Header -->
     <FrameLayout
         android:id="@+id/frameHeader"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <!-- Navigation Container -->
@@ -21,14 +22,14 @@
         android:id="@+id/fragmentContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:navGraph="@navigation/nav_graph"
         app:defaultNavHost="true" />
 
     <!-- Footer -->
     <FrameLayout
         android:id="@+id/frameFooter"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

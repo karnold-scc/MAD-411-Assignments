@@ -86,73 +86,14 @@ class MainActivity : AppCompatActivity() {
 //        tipButton.setOnClickListener{startFinancialTips()}
     }
 
-    fun addExpense(){
-
-        val expName = expenseNameEditText.text.toString()
-        val amount = expenseAmountEditText.text.toString()
-
-
-        //val expDate = expenseDateEditText.text.toString()
-        if (expName.isNotEmpty() && amount.isNotEmpty()) {
-            expenses.add(Expense((System.currentTimeMillis() / 1000).toInt(), expName, amount))
-            adapter.notifyItemInserted(expenses.size -1 )
-            updateFooter()
-        }
-        expenseNameEditText.setText(" ")
-        expenseAmountEditText.setText(" ")
-        expenseDateEditText.setText(" ")
-    }
 
     //call footer update function
     private fun updateFooter(){
+
         val total = expenses.sumByDouble { it.amount.toDouble() }
         footer.updateTotal(total)
     }
 
-    //button events
-    private fun deleteItem (pos: Int){
-        expenses.removeAt(pos)
-        adapter.notifyItemRemoved(pos)
-    }
 
-    private fun showExpenseDetails(position: Int){
-        val expense = expenses[position]
-        val intent = Intent(this, ExpenseDetails::class.java)
-        intent.putExtra("expense_name",expense.name)
-        intent.putExtra("expense_amount", expense.amount)
-        startActivity(intent)
-    }
-
-    private fun startFinancialTips(){
-        //Investopedia is a funny word
-        val intent = Intent(Intent.ACTION_VIEW, "https://www.investopedia.com/articles/younginvestors/08/eight-tips.asp".toUri())
-        startActivity(intent)
-    }
-
-    //Lifecycle log stuff
-    override fun onStart() {
-        super.onStart()
-        Log.d("Lifecycle", "onStart called successfully.")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("Lifecycle", "onResume called successfully.")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("Lifecycle", "onPause called successfully.")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("Lifecycle", "onStop called successfully.")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("Lifecycle", "onDestroy called successfully.")
-    }
 
 }

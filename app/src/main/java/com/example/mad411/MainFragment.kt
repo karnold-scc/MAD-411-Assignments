@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
+import com.example.mad411.FooterFragment
 
 //GSON
 import com.google.gson.Gson
@@ -48,6 +49,7 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
         expenseList.clear()
         expenseList.addAll(loadTasksFromFile(requireContext()))
 
+
         customAdapter = CustomAdapter(expenseList, this)
         recyclerView.adapter = customAdapter
 
@@ -72,6 +74,9 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
         expenseList.remove(expense)
         customAdapter.notifyDataSetChanged()
         saveTasksToFile(requireContext(), expenseList)
+
+
+
     }
 
 
