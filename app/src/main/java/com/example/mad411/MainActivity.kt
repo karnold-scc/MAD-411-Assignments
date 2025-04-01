@@ -17,9 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.ceil
 import kotlin.math.exp
 
-data class Expense(val id: Int, val name: String, val amount: String){
 
-}
 
 
 
