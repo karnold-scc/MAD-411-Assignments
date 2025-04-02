@@ -63,27 +63,12 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
             findNavController().navigate(R.id.action_mainFragment_to_addExpenseFragment)
         }
 
-        fetchCurrencies()
+        //fetchCurrencies()
 
         return view
     }
 
-    private fun fetchCurrencies(){
-        lifecycleScope.launch{
-            try{
-                val currencies = withContext(Dispatchers.IO){
-                    RetrofitInstance.api.getCurrency()
-                }
 
-                if(currencies.isNotEmpty()){
-                    val currency = currencies[0]
-                }
-            }
-            catch (e: Exception){
-                Snackbar.make(requireView(), "Error: ${e.message}", Snackbar.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     override fun onEditClick(expense: Expense){
         val bundle = Bundle().apply{
@@ -114,7 +99,8 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
                     bundle.getInt("expenseId"),
                     bundle.getString("expenseName", ""),
                     bundle.getString("expenseAmount", ""),
-
+                    bundle.getString("expenseCurrency", ""),
+                    bundle.getDouble("expenseConverted", 0.0)
                 )
                 Log.d("InBundle", bundle.getString("expenseName").toString())
 
