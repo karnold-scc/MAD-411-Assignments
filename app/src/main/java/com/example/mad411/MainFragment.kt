@@ -11,15 +11,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.example.mad411.FooterFragment
+import com.google.android.material.snackbar.Snackbar
 
 //GSON
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -58,7 +63,26 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
             findNavController().navigate(R.id.action_mainFragment_to_addExpenseFragment)
         }
 
+        fetchCurrencies()
+
         return view
+    }
+
+    private fun fetchCurrencies(){
+        lifecycleScope.launch{
+            try{
+                val currencies = withContext(Dispatchers.IO){
+                    RetrofitInstance.api.getCurrency()
+                }
+
+                if(currencies.isNotEmpty()){
+                    val currency = currencies[0]
+                }
+            }
+            catch (e: Exception){
+                Snackbar.make(requireView(), "Error: ${e.message}", Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onEditClick(expense: Expense){
@@ -89,7 +113,7 @@ class MainFragment : Fragment(), CustomAdapter.ExpenseItemListener {
 
                     bundle.getInt("expenseId"),
                     bundle.getString("expenseName", ""),
-                    bundle.getString("expenseAmount", "")
+                    bundle.getString("expenseAmount", ""),
 
                 )
                 Log.d("InBundle", bundle.getString("expenseName").toString())
