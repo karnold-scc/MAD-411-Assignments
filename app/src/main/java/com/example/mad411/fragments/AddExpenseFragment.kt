@@ -1,4 +1,4 @@
-package com.example.mad411
+package com.example.mad411.fragments
 
 //import android.app.Fragment
 import android.os.Bundle
@@ -13,15 +13,14 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.os.bundleOf
-import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.mad411.R
 import com.example.mad411.apiFiles.CurrencyApiObj
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Currency
 import com.example.mad411.apiFiles.RetrofitInstance
 import com.example.mad411.expense.Expense
 
