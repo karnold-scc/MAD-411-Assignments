@@ -1,4 +1,4 @@
-package com.example.mad411
+package com.example.mad411.apiFiles
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

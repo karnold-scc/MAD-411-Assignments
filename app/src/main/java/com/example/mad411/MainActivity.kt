@@ -1,24 +1,15 @@
 package com.example.mad411
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.ceil
-import kotlin.math.exp
-
-
-
+import com.example.mad411.expense.CustomAdapter
+import com.example.mad411.expense.Expense
+import com.example.mad411.fragments.FooterFragment
+import com.example.mad411.fragments.HeaderFragment
 
 
 class MainActivity : AppCompatActivity() {

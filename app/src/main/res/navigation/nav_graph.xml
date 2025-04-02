@@ -7,7 +7,7 @@
     <!-- Main Fragment (Task List) -->
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.mad411.MainFragment"
+        android:name="com.example.mad411.fragments.MainFragment"
         android:label="Task List"
         tools:layout="@layout/fragment_main">
 
@@ -25,7 +25,7 @@
     <!-- Task Details Fragment -->
     <fragment
         android:id="@+id/expenseDetailsFragment"
-        android:name="com.example.mad411.ExpenseDetailsFragment"
+        android:name="com.example.mad411.fragments.ExpenseDetailsFragment"
         android:label="Task Details"
         tools:layout="@layout/fragment_expense_details">
 
@@ -37,7 +37,7 @@
     <!-- Add Task Fragment -->
     <fragment
         android:id="@+id/addExpenseFragment"
-        android:name="com.example.mad411.AddExpenseFragment"
+        android:name="com.example.mad411.fragments.AddExpenseFragment"
         android:label="Add Task"
         tools:layout="@layout/fragment_add_expense" />
 
